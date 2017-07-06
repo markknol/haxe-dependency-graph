@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>dependency-graph</title>
+	<meta name="description" content="" />
+	<style>
+	body,html { font:14px arial,sans-serif; width:100%;height:100%};
+	select {  width: 50%;}
+	a.dep { transform:translateX(-50%) translateY(-50%); padding: 5px; position:absolute; border:1px solid #333; background:#fff}
+	a.dep.selected { padding:10px; border:2px solid #333;}
+	#container { position:relative; width:100%; height:90%}
+	#canvas, #links { position:absolute; left:0;right:0;top:0;bottom:0}
+	#canvas { background:#f0f0f0}
+	</style>
+</head>
+<body>
+	Select class: <select id="dropdown"></select>
+	<div id="container">
+		<canvas id="canvas"></canvas>
+		<div id="links"></div>
+	</div>
+	<script src="dependency-graph.js"></script>
+</body>
+</html>
