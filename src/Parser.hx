@@ -14,7 +14,7 @@ class Parser
 	{
 
 	}
-
+	
 	public function parse(dumpFile:String, ?infos:Array<DepInfo>):Array<DepInfo>
 	{
 		// find correct line endings
