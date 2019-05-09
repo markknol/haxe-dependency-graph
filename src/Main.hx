@@ -19,7 +19,7 @@ class Main
 	private var _context:CanvasRenderingContext2D;
 	private var _linksContainer:Element;
 	private var _parser:Parser = new Parser();
-	private var graphData:Array<DepInfo>;
+	private var _data:Array<DepInfo>;
 	private var _canvas:CanvasElement;
 
 	public function new()
@@ -31,28 +31,40 @@ class Main
 		_canvas = cast document.getElementById("canvas");
 		_canvas.width = window.innerWidth;
 		_canvas.height = window.innerHeight;
+		
+		window.onresize = function()
+		{
+			var dropdown:SelectElement = cast document.getElementById("dropdown");
+			_canvas.width = window.innerWidth;
+			_canvas.height = window.innerHeight;
+			if (_data != null && _data.length > 0)
+			{
+				var item = _data[Std.parseInt(dropdown.value)];
+				showDependendies(item);
+			}
+		}
 		_context = _canvas.getContext2d();
-		addDragDrop(document.getElementById("canvas"));
+		addDragDrop(_canvas);
 	}
 	
 	public function clear()
 	{
-		graphData = null;
+		_data = null;
 	}
 	
 	public function loadFile(fileContent:String)
 	{
 		clear();
-		graphData = _parser.parse(fileContent, graphData);
+		_data = _parser.parse(fileContent, _data);
 		
 		_linksContainer = document.getElementById("links");
 		
 		var dropdown:SelectElement = cast document.getElementById("dropdown");
 		removeChildrenOf(dropdown);
-		for (index in 0...graphData.length)
+		for (index in 0..._data.length)
 		{
-			var item = graphData[index];
-			if (item.path.dir.indexOf("std") != -1) continue;
+			var item = _data[index];
+			// if (item.path.dir.indexOf("std") != -1) continue;
 			
 			var option = document.createOptionElement();
 			option.textContent = item.className;
@@ -61,13 +73,13 @@ class Main
 		}
 		dropdown.onchange = function()
 		{
-			var item = graphData[Std.parseInt(dropdown.value)];
+			var item = _data[Std.parseInt(dropdown.value)];
 			showDependendies(item);
 		}
 		
-		if (graphData.length > 0)
+		if (_data != null && _data.length > 0)
 		{
-			showDependendies(graphData[0]);
+			showDependendies(_data[0]);
 		}
 	}
 	
@@ -104,6 +116,7 @@ class Main
 		_context.clearRect(0, 0, width, height);
 		removeChildrenOf(_linksContainer);
 		
+		if (_data == null) return;
 		createDiv(info, width / 2, height / 2, "selected");
 		
 		_context.beginPath();
@@ -119,7 +132,7 @@ class Main
 			_context.moveTo(width / 2, height / 2);
 			_context.lineTo(x1, y1);
 			createDiv(dep, x1, y1);
-			/*
+			
 			var total2 = dep.dependencies.length;
 			for (j in 0 ... total2)
 			{
@@ -136,7 +149,7 @@ class Main
 					createDiv(depdep, x2, y2);
 				}
 			}
-			*/
+			
 		}
 		_context.strokeStyle = "1px solid #666";
 		_context.stroke();
