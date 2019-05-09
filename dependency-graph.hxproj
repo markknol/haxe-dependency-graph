@@ -2,17 +2,17 @@
 <project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie outputType="Application" />
+    <movie outputType="CustomBuild" />
     <movie input="" />
-    <movie path="bin\dependency-graph.js" />
+    <movie path="build.hxml" />
     <movie fps="0" />
     <movie width="0" />
     <movie height="0" />
     <movie version="0" />
     <movie minorVersion="0" />
-    <movie platform="JavaScript" />
-    <movie background="#FFFFFF" />
-    <movie preferredSDK="Haxe 3.4.2;3.4.2;" />
+    <movie platform="hxml" />
+    <movie background="#2D2D2F" />
+    <movie preferredSDK="Haxe 4.0.0-rc.2;4.0.0-rc.2;" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -20,12 +20,12 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="" />
+    <option directives="analyzer-optimize" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="Main" />
     <option enabledebug="False" />
-    <option additional="" />
+    <option additional="-dce full" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
@@ -40,14 +40,14 @@
     <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand />
+  <preBuildCommand>cmd /c haxe $(OutputFile)</preBuildCommand>
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="True" />
     <option testMovie="Webserver" />
-    <option testMovieCommand="bin/index.html" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage />

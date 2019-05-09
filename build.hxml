@@ -1,0 +1,7 @@
+### @author Mark Knol
+-cp src
+-main Main
+-js bin/dependency-graph.js
+
+-dce full
+-D analyzer-optimize
